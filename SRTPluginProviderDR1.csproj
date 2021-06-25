@@ -40,8 +40,18 @@
   </Target>
 
   <ItemGroup>
+    <None Remove=".gitattributes" />
+    <None Remove=".gitignore" />
+    <None Remove="LICENSE" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\ProcessMemory\ProcessMemory\ProcessMemory.csproj" />
     <ProjectReference Include="..\..\SRTHost\SRTPluginBase\SRTPluginBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Structs\GameStructs\" />
   </ItemGroup>
   
 </Project>
