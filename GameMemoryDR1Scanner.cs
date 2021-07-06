@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using System.Collections.Generic;
+using SRTPluginProviderDR1.Structs.GameStructs;
 
 namespace SRTPluginProviderDR1
 {
@@ -16,15 +17,25 @@ namespace SRTPluginProviderDR1
         public int ProcessExitCode => (memoryAccess != null) ? memoryAccess.ProcessExitCode : 0;
 
         // Pointer Address Variables
-        private int pointerForHealth;
-        private int pointerForMaxHealth;
+        private int pointerForGameSession;
+        private int pointerForGameStatus;
+        private int pointerForPlayerStatuses;
+        private int pointerForVelocityInfo;
 
         // Pointer Classes
         private IntPtr BaseAddress { get; set; }
 
-        private MultilevelPointer PointerPlayerHP { get; set; }
+        private MultilevelPointer PointerGameStatusInfo { get; set; }
 
-        private MultilevelPointer PointerPlayerMaxHP { get; set; }
+        private MultilevelPointer PointerCoordinatesInfo { get; set; }
+
+        private MultilevelPointer PointerPlayerStatusesInfo { get; set; }
+
+        private MultilevelPointer PointerCurrentWeapon { get; set; }
+
+        private MultilevelPointer PointerBossInfo { get; set; }
+
+        private MultilevelPointer PointerVelocityInfo { get; set; }
 
         internal GameMemoryDR1Scanner(Process process = null)
         {
@@ -47,17 +58,42 @@ namespace SRTPluginProviderDR1
             {
                 BaseAddress = NativeWrappers.GetProcessBaseAddress(pid, PInvoke.ListModules.LIST_MODULES_64BIT); // Bypass .NET's managed solution for getting this and attempt to get this info ourselves via PInvoke since some users are getting 299 PARTIAL COPY when they seemingly shouldn't.
 
-                PointerPlayerHP = new MultilevelPointer(
-                    memoryAccess, 
-                    IntPtr.Add(BaseAddress, pointerForHealth),
+                PointerGameStatusInfo = new MultilevelPointer(
+                    memoryAccess,
+                    IntPtr.Add(BaseAddress, pointerForGameStatus),
+                    0x2F058
+                );
+
+                PointerCoordinatesInfo = new MultilevelPointer(
+                    memoryAccess,
+                    IntPtr.Add(BaseAddress, pointerForGameSession),
                     0xC8
                 );
 
-                PointerPlayerMaxHP = new MultilevelPointer(
+                PointerCurrentWeapon = new MultilevelPointer(
                     memoryAccess,
-                    IntPtr.Add(BaseAddress, pointerForMaxHealth),
-                    0x48
+                    IntPtr.Add(BaseAddress, pointerForGameSession),
+                    0xC8,
+                    0x1230
                 );
+
+                PointerBossInfo = new MultilevelPointer(
+                    memoryAccess,
+                    IntPtr.Add(BaseAddress, pointerForGameSession),
+                    0x118
+                );
+
+                PointerPlayerStatusesInfo = new MultilevelPointer(
+                    memoryAccess,
+                    IntPtr.Add(BaseAddress, pointerForPlayerStatuses)
+                );
+
+                PointerVelocityInfo = new MultilevelPointer(
+                    memoryAccess,
+                    IntPtr.Add(BaseAddress, pointerForVelocityInfo),
+                    0x500
+                );
+
             }
         }
 
@@ -67,8 +103,10 @@ namespace SRTPluginProviderDR1
             {
                 case GameVersion.DR_20210128_3:
                     {
-                        pointerForHealth = 0x01CF2620;
-                        pointerForMaxHealth = 0x01CF3128;
+                        pointerForGameSession = 0x01CF2620;
+                        pointerForGameStatus = 0x01946FC0;
+                        pointerForPlayerStatuses = 0x01946950;
+                        pointerForVelocityInfo = 0x01965348;
                         return true;
                     }
             }
@@ -82,20 +120,72 @@ namespace SRTPluginProviderDR1
         /// </summary>
         internal void UpdatePointers()
         {
-            PointerPlayerHP.UpdatePointers();
-            PointerPlayerMaxHP.UpdatePointers();
+            PointerGameStatusInfo.UpdatePointers();
+            PointerCoordinatesInfo.UpdatePointers();
+            PointerCurrentWeapon.UpdatePointers();
+            PointerBossInfo.UpdatePointers();
+            PointerPlayerStatusesInfo.UpdatePointers();
+            PointerVelocityInfo.UpdatePointers();
         }
 
         internal unsafe IGameMemoryDR1 Refresh()
         {
             bool success;
 
-            //Player HP
-            fixed (int* p = &gameMemoryValues._playerCurrentHealth)
-                success = PointerPlayerHP.TryDerefInt(0x12EC, p);
+            //Game Info
+            if (SafeReadByteArray(PointerGameStatusInfo.Address, sizeof(GameStatusInfo), out byte[] gameStatusInfoBytes))
+            {
+                var gameStatus = GameStatusInfo.AsStruct(gameStatusInfoBytes);
+                gameMemoryValues._isGamePaused = gameStatus.IsGamePaused;
+                gameMemoryValues._gameTime = gameStatus.GameTime;
+                gameMemoryValues._gamemenu = gameStatus.GameMenu;
+            }
 
-            fixed (int* p = &gameMemoryValues._playerMaxHealth)
-                success = PointerPlayerMaxHP.TryDerefInt(0x120, p);
+            //Coordinates Info
+            if (SafeReadByteArray(PointerCoordinatesInfo.Address, sizeof(PlayerCoordinatesInfo), out byte[] gamePlayerCoordinatesInfoBytes))
+            {
+                var playerCoordinatesInfo = PlayerCoordinatesInfo.AsStruct(gamePlayerCoordinatesInfoBytes);
+                gameMemoryValues._playerXPosition = playerCoordinatesInfo.XPosition;
+                gameMemoryValues._playerYPosition = playerCoordinatesInfo.YPosition;
+                gameMemoryValues._playerZPosition = playerCoordinatesInfo.ZPosition;
+                gameMemoryValues._playerRotation1 = playerCoordinatesInfo.Rotation1;
+                gameMemoryValues._playerRotation2 = playerCoordinatesInfo.Rotation2;
+            }
+
+            //Player Statuses Info
+            if (SafeReadByteArray(PointerPlayerStatusesInfo.Address, sizeof(PlayerStatusesInfo), out byte[] gamePlayerStatusesInfoBytes))
+            {
+                var playerStatusesInfo = PlayerStatusesInfo.AsStruct(gamePlayerStatusesInfoBytes);
+                gameMemoryValues._attack = playerStatusesInfo.Attack;
+                gameMemoryValues._speed = playerStatusesInfo.Speed;
+                gameMemoryValues._life = playerStatusesInfo.Life;
+                gameMemoryValues._itemStock = playerStatusesInfo.ItemStock;
+                gameMemoryValues._throwDistance = playerStatusesInfo.ThrowDistance;
+            }
+
+            // Velocity Info
+            if (SafeReadByteArray(PointerVelocityInfo.Address, sizeof(VelocityInfo), out byte[] gameVelocityInfoBytes))
+            {
+                var velovity = VelocityInfo.AsStruct(gameVelocityInfoBytes);
+                gameMemoryValues._walkedDistance = velovity.WalkedDistance;
+            }
+
+            // Current Weapon Info
+            if (SafeReadByteArray(PointerCurrentWeapon.Address, sizeof(WeaponInfo), out byte[] gameWeaponInfoBytes))
+            {
+                var weapon = WeaponInfo.AsStruct(gameWeaponInfoBytes);
+                gameMemoryValues._weaponDurability = weapon.Durability;
+                gameMemoryValues._weaponMaxDurability = weapon.MaxDurability;
+                gameMemoryValues._weaponMaxAmmo = weapon.MaxAmmo;
+            }
+
+            //Boss Info
+            if (SafeReadByteArray(PointerBossInfo.Address, sizeof(BossInfo), out byte[] gameBossInfoBytes))
+            {
+                var bossInfo = BossInfo.AsStruct(gameBossInfoBytes);
+                gameMemoryValues._bossCurrentHealth = bossInfo.CurrentHealth;
+                gameMemoryValues._bossMaxHealth = bossInfo.MaxHealth;
+            }
 
             HasScanned = true;
             return gameMemoryValues;
@@ -130,13 +220,9 @@ namespace SRTPluginProviderDR1
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
                     if (memoryAccess != null)
                         memoryAccess.Dispose();
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
 
                 disposedValue = true;
             }
@@ -145,10 +231,7 @@ namespace SRTPluginProviderDR1
         // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
         }
         #endregion
     }

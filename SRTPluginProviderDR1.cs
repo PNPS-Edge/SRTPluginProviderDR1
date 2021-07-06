@@ -54,7 +54,7 @@ namespace SRTPluginProviderDR1
                 if (!GameRunning) // Not running? Bail out!
                         return null;
 
-                if (stopwatch.ElapsedMilliseconds >= 2000L)
+                if (stopwatch.ElapsedMilliseconds >= 1000)
                 {
                     gameMemoryScanner.UpdatePointers();
                     stopwatch.Restart();

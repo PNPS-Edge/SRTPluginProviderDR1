@@ -22,7 +22,7 @@ namespace SRTPluginProviderDR1
 
             if (checksum.SequenceEqual(dr_20210128_3))
             {
-                Console.WriteLine("Steam v1.0 Patch 3 Detected.");
+                Console.WriteLine("Dead Rising (2016) Steam v1.0 Patch 3 Detected.");
                 return GameVersion.DR_20210128_3;
             }
 
