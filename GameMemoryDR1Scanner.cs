@@ -20,7 +20,6 @@ namespace SRTPluginProviderDR1
         private int pointerForGameSession;
         private int pointerForGameStatus;
         private int pointerForPlayerStatuses;
-        private int pointerForVelocityInfo;
         private int pointerForCar;
 
         // Pointer Classes
@@ -28,15 +27,13 @@ namespace SRTPluginProviderDR1
 
         private MultilevelPointer PointerGameStatusInfo { get; set; }
 
-        private MultilevelPointer PointerCoordinatesInfo { get; set; }
+        private MultilevelPointer PointerPlayerInfo { get; set; }
 
         private MultilevelPointer PointerPlayerStatusesInfo { get; set; }
 
         private MultilevelPointer PointerCurrentWeapon { get; set; }
 
         private MultilevelPointer PointerBossInfo { get; set; }
-
-        private MultilevelPointer PointerVelocityInfo { get; set; }
 
         private MultilevelPointer PointerTunnelCarInfo { get; set; }
 
@@ -67,7 +64,7 @@ namespace SRTPluginProviderDR1
                     0x2F058
                 );
 
-                PointerCoordinatesInfo = new MultilevelPointer(
+                PointerPlayerInfo = new MultilevelPointer(
                     memoryAccess,
                     IntPtr.Add(BaseAddress, pointerForGameSession),
                     0xC8
@@ -91,12 +88,6 @@ namespace SRTPluginProviderDR1
                     IntPtr.Add(BaseAddress, pointerForPlayerStatuses)
                 );
 
-                PointerVelocityInfo = new MultilevelPointer(
-                    memoryAccess,
-                    IntPtr.Add(BaseAddress, pointerForVelocityInfo),
-                    0x500
-                );
-
                 PointerTunnelCarInfo = new MultilevelPointer(
                     memoryAccess,
                     IntPtr.Add(BaseAddress, pointerForCar),
@@ -117,7 +108,6 @@ namespace SRTPluginProviderDR1
                         pointerForGameSession = 0x01CF2620;
                         pointerForGameStatus = 0x01946FC0;
                         pointerForPlayerStatuses = 0x01946950;
-                        pointerForVelocityInfo = 0x01965348;
                         pointerForCar = 0x01946260;
                         return true;
                     }
@@ -133,11 +123,10 @@ namespace SRTPluginProviderDR1
         internal void UpdatePointers()
         {
             PointerGameStatusInfo.UpdatePointers();
-            PointerCoordinatesInfo.UpdatePointers();
+            PointerPlayerInfo.UpdatePointers();
             PointerCurrentWeapon.UpdatePointers();
             PointerBossInfo.UpdatePointers();
             PointerPlayerStatusesInfo.UpdatePointers();
-            PointerVelocityInfo.UpdatePointers();
             PointerTunnelCarInfo.UpdatePointers();
         }
 
@@ -155,32 +144,28 @@ namespace SRTPluginProviderDR1
             }
 
             //Coordinates Info
-            if (SafeReadByteArray(PointerCoordinatesInfo.Address, sizeof(PlayerCoordinatesInfo), out byte[] gamePlayerCoordinatesInfoBytes))
+            if (SafeReadByteArray(PointerPlayerInfo.Address, sizeof(PlayerInfo), out byte[] gamePlayerInfoBytes))
             {
-                var playerCoordinatesInfo = PlayerCoordinatesInfo.AsStruct(gamePlayerCoordinatesInfoBytes);
-                gameMemoryValues._playerXPosition = playerCoordinatesInfo.XPosition;
-                gameMemoryValues._playerYPosition = playerCoordinatesInfo.YPosition;
-                gameMemoryValues._playerZPosition = playerCoordinatesInfo.ZPosition;
-                gameMemoryValues._playerRotation1 = playerCoordinatesInfo.Rotation1;
-                gameMemoryValues._playerRotation2 = playerCoordinatesInfo.Rotation2;
+                var playerInfo = PlayerInfo.AsStruct(gamePlayerInfoBytes);
+                gameMemoryValues.Player._xPosition = playerInfo.XPosition;
+                gameMemoryValues.Player._yPosition = playerInfo.YPosition;
+                gameMemoryValues.Player._zPosition = playerInfo.ZPosition;
+                gameMemoryValues.Player._rotation1 = playerInfo.Rotation1;
+                gameMemoryValues.Player._rotation2 = playerInfo.Rotation2;
+                gameMemoryValues.Player._currentHealth = playerInfo.Health;
             }
 
             //Player Statuses Info
             if (SafeReadByteArray(PointerPlayerStatusesInfo.Address, sizeof(PlayerStatusesInfo), out byte[] gamePlayerStatusesInfoBytes))
             {
                 var playerStatusesInfo = PlayerStatusesInfo.AsStruct(gamePlayerStatusesInfoBytes);
-                gameMemoryValues._attack = playerStatusesInfo.Attack;
-                gameMemoryValues._speed = playerStatusesInfo.Speed;
-                gameMemoryValues._life = playerStatusesInfo.Life;
-                gameMemoryValues._itemStock = playerStatusesInfo.ItemStock;
-                gameMemoryValues._throwDistance = playerStatusesInfo.ThrowDistance;
-            }
-
-            // Velocity Info
-            if (SafeReadByteArray(PointerVelocityInfo.Address, sizeof(VelocityInfo), out byte[] gameVelocityInfoBytes))
-            {
-                var velovity = VelocityInfo.AsStruct(gameVelocityInfoBytes);
-                gameMemoryValues._walkedDistance = velovity.WalkedDistance;
+                gameMemoryValues.Player._statusAttack = playerStatusesInfo.Attack;
+                gameMemoryValues.Player._statusSpeed = playerStatusesInfo.Speed;
+                gameMemoryValues.Player._maxHealth = playerStatusesInfo.MaxHealth;
+                gameMemoryValues.Player._statusItemStock = playerStatusesInfo.ItemStock;
+                gameMemoryValues.Player._statusThrowDistance = playerStatusesInfo.ThrowDistance;
+                gameMemoryValues.Player._level = playerStatusesInfo.Level;
+                gameMemoryValues.Player._ppCounter = playerStatusesInfo.PPCounter;
             }
 
             // Current Weapon Info
@@ -200,6 +185,7 @@ namespace SRTPluginProviderDR1
                 gameMemoryValues._bossMaxHealth = bossInfo.MaxHealth;
             }
 
+            // Tunnel Car Info
             if (SafeReadByteArray(PointerTunnelCarInfo.Address, sizeof(TunnelCarInfo), out byte[] gameTunnelCarInfoBytes))
             {
                 var carInfo = TunnelCarInfo.AsStruct(gameTunnelCarInfoBytes);

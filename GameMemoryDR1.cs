@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Reflection;
+using SRTPluginProviderDR1.Structs;
 
 namespace SRTPluginProviderDR1
 {
@@ -19,38 +20,7 @@ namespace SRTPluginProviderDR1
         public uint GameTime { get => _gameTime; set => _gameTime = value; }
         internal uint _gameTime;
 
-        public float PlayerXPosition { get => _playerXPosition; set => _playerXPosition = value; }
-        internal float _playerXPosition;
-
-        public float PlayerYPosition { get => _playerYPosition; set => _playerYPosition = value; }
-        internal float _playerYPosition;
-
-        public float PlayerZPosition { get => _playerZPosition; set => _playerZPosition = value; }
-        internal float _playerZPosition;
-
-        public float PlayerRotation1 { get => _playerRotation1; set => _playerRotation1 = value; }
-        internal float _playerRotation1;
-
-        public float PlayerRotation2 { get => _playerRotation2; set => _playerRotation2 = value; }
-        internal float _playerRotation2;
-
-        public long WalkedDistance { get => _walkedDistance; set => _walkedDistance = value; }
-        internal long _walkedDistance;
-
-        public short Attack { get => _attack; set => _attack = value; }
-        internal short _attack;
-
-        public byte Speed { get => _speed; set => _speed = value; }
-        internal byte _speed;
-
-        public short Life { get => _life; set => _life = value; }
-        internal short _life;
-
-        public byte ItemStock { get => _itemStock; set => _itemStock = value; }
-        internal byte _itemStock;
-
-        public byte ThrowDistance { get => _throwDistance; set => _throwDistance = value; }
-        internal byte _throwDistance;
+        public Player Player { get; set; }
 
         public float WeaponDurability { get => _weaponDurability; set => _weaponDurability = value; }
         internal float _weaponDurability;
@@ -72,5 +42,13 @@ namespace SRTPluginProviderDR1
 
         public int TunnelCarMaxHealth { get => _tunnelCarMaxHealth; set => _tunnelCarMaxHealth = value; }
         internal int _tunnelCarMaxHealth;
+
+        /// <summary>
+        /// Initializes a new intance of the <see cref="GameMemoryDR1"/> class
+        /// </summary>
+        public GameMemoryDR1()
+        {
+            this.Player = new Player();
+        }
     }
 }

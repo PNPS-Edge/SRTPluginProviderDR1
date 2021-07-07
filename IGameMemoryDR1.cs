@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SRTPluginProviderDR1.Structs;
+using System;
 
 namespace SRTPluginProviderDR1
 {
@@ -12,27 +13,7 @@ namespace SRTPluginProviderDR1
 
         uint GameTime { get; set; }
 
-        float PlayerXPosition { get; set; }
-
-        float PlayerYPosition { get; set; }
-
-        float PlayerZPosition { get; set; }
-
-        float PlayerRotation1 { get; set; }
-
-        float PlayerRotation2 { get; set; }
-
-        long WalkedDistance { get; set; }
-
-        short Attack { get; set; }
-
-        byte Speed { get; set; }
-
-        short Life { get; set; }
-
-        byte ItemStock { get; set; }
-
-        byte ThrowDistance { get; set; }
+        Player Player { get; set; } 
 
         float WeaponDurability { get; set; }
 
