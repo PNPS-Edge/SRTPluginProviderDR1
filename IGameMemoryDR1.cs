@@ -13,6 +13,12 @@ namespace SRTPluginProviderDR1
 
         Player Player { get; set; } 
 
+        float CameraXPosition { get; set; }
+
+        float CameraYPosition { get; set; }
+
+        float CameraZPosition { get; set; }
+
         float WeaponDurability { get; set; }
 
         float WeaponMaxDurability { get; set; }
