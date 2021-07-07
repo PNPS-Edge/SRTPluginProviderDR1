@@ -21,6 +21,9 @@ namespace SRTPluginProviderDR1
         private int pointerForGameStatus;
         private int pointerForPlayerStatuses;
         private int pointerForCar;
+        private int pointerForCampain;
+        private int pointerForRoom;
+        private int pointerForCamera;
 
         // Pointer Classes
         private IntPtr BaseAddress { get; set; }
@@ -36,6 +39,12 @@ namespace SRTPluginProviderDR1
         private MultilevelPointer PointerBossInfo { get; set; }
 
         private MultilevelPointer PointerTunnelCarInfo { get; set; }
+
+        private MultilevelPointer PointerCampainInfo { get; set; }
+
+        private MultilevelPointer PointerRoomInfo { get; set; }
+
+        private MultilevelPointer PointerCameraInfo { get; set; }
 
         internal GameMemoryDR1Scanner(Process process = null)
         {
@@ -96,6 +105,23 @@ namespace SRTPluginProviderDR1
                     0x8B0,
                     0x18
                 );
+
+                PointerCampainInfo = new MultilevelPointer(
+                    memoryAccess,
+                    IntPtr.Add(BaseAddress, pointerForCampain),
+                    0x20DC0
+                );
+
+                PointerRoomInfo = new MultilevelPointer(
+                    memoryAccess,
+                    IntPtr.Add(BaseAddress, pointerForRoom)
+                );
+
+                PointerCameraInfo = new MultilevelPointer(
+                    memoryAccess,
+                    IntPtr.Add(BaseAddress, pointerForCamera),
+                    0x40
+                );
             }
         }
 
@@ -109,6 +135,9 @@ namespace SRTPluginProviderDR1
                         pointerForGameStatus = 0x01946FC0;
                         pointerForPlayerStatuses = 0x01946950;
                         pointerForCar = 0x01946260;
+                        pointerForCampain = 0x01944DD8;
+                        pointerForRoom = 0x01945F70;
+                        pointerForCamera = 0x01CF3128;
                         return true;
                     }
             }
@@ -128,6 +157,9 @@ namespace SRTPluginProviderDR1
             PointerBossInfo.UpdatePointers();
             PointerPlayerStatusesInfo.UpdatePointers();
             PointerTunnelCarInfo.UpdatePointers();
+            PointerCampainInfo.UpdatePointers();
+            PointerRoomInfo.UpdatePointers();
+            PointerCameraInfo.UpdatePointers();
         }
 
         internal unsafe IGameMemoryDR1 Refresh()
@@ -138,9 +170,9 @@ namespace SRTPluginProviderDR1
             if (SafeReadByteArray(PointerGameStatusInfo.Address, sizeof(GameStatusInfo), out byte[] gameStatusInfoBytes))
             {
                 var gameStatus = GameStatusInfo.AsStruct(gameStatusInfoBytes);
-                gameMemoryValues._isGamePaused = gameStatus.IsGamePaused;
-                gameMemoryValues._gameTime = gameStatus.GameTime;
-                gameMemoryValues._gamemenu = gameStatus.GameMenu;
+                gameMemoryValues.Game._isGamePaused = gameStatus.IsGamePaused;
+                gameMemoryValues.Campain._gameTime = gameStatus.GameTime;
+                gameMemoryValues.Game._gamemenu = gameStatus.GameMenu;
             }
 
             //Coordinates Info
@@ -191,6 +223,33 @@ namespace SRTPluginProviderDR1
                 var carInfo = TunnelCarInfo.AsStruct(gameTunnelCarInfoBytes);
                 gameMemoryValues._tunnelCarCurrentHealth = carInfo.CurrentHealth;
                 gameMemoryValues._tunnelCarMaxHealth = carInfo.MaxHealth;
+            }
+
+            // Campaign Info
+            if (SafeReadByteArray(PointerCampainInfo.Address, sizeof(CampainInfo), out byte[] gameCampainInfoBytes))
+            {
+                var campaignInfo = CampainInfo.AsStruct(gameCampainInfoBytes);
+                gameMemoryValues.Campain.CampaignProgress = campaignInfo.CampainProgress;
+                gameMemoryValues.Campain.CutsceneId = campaignInfo.CutsceneId;
+            }
+
+            // Room Info
+            if (SafeReadByteArray(PointerRoomInfo.Address, sizeof(RoomInfo), out byte[] gameRoomInfoBytes))
+            {
+                var roomInfo = RoomInfo.AsStruct(gameRoomInfoBytes);
+                gameMemoryValues.Campain.RoomId = roomInfo.RoomId;
+                gameMemoryValues.Campain.LoadingRoom1Id = roomInfo.LoadingRoom1Id;
+                gameMemoryValues.Campain.LoadingRoom2Id = roomInfo.LoadingRoom2Id;
+                gameMemoryValues.Game.IsLoading = roomInfo.IsLoading;
+            }
+
+            // Camera Info
+            if (SafeReadByteArray(PointerCameraInfo.Address, sizeof(CameraInfo), out byte[] gameCameraInfoBytes))
+            {
+                var cameraInfo = CameraInfo.AsStruct(gameCameraInfoBytes);
+                gameMemoryValues.CameraXPosition = cameraInfo.XPosition;
+                gameMemoryValues.CameraYPosition = cameraInfo.YPosition;
+                gameMemoryValues.CameraZPosition = cameraInfo.ZPosition;
             }
 
             HasScanned = true;

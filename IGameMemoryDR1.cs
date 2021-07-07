@@ -7,11 +7,9 @@ namespace SRTPluginProviderDR1
     {
         string VersionInfo { get; }
 
-        int GameMenu { get; set; }
+        Game Game { get; set; }
 
-        bool IsGamePaused { get; set; }
-
-        uint GameTime { get; set; }
+        Campain Campain { get; set; }
 
         Player Player { get; set; } 
 
