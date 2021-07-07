@@ -21,6 +21,7 @@ namespace SRTPluginProviderDR1
         private int pointerForGameStatus;
         private int pointerForPlayerStatuses;
         private int pointerForVelocityInfo;
+        private int pointerForCar;
 
         // Pointer Classes
         private IntPtr BaseAddress { get; set; }
@@ -36,6 +37,8 @@ namespace SRTPluginProviderDR1
         private MultilevelPointer PointerBossInfo { get; set; }
 
         private MultilevelPointer PointerVelocityInfo { get; set; }
+
+        private MultilevelPointer PointerTunnelCarInfo { get; set; }
 
         internal GameMemoryDR1Scanner(Process process = null)
         {
@@ -94,6 +97,14 @@ namespace SRTPluginProviderDR1
                     0x500
                 );
 
+                PointerTunnelCarInfo = new MultilevelPointer(
+                    memoryAccess,
+                    IntPtr.Add(BaseAddress, pointerForCar),
+                    0x1E8,
+                    0x60,
+                    0x8B0,
+                    0x18
+                );
             }
         }
 
@@ -107,6 +118,7 @@ namespace SRTPluginProviderDR1
                         pointerForGameStatus = 0x01946FC0;
                         pointerForPlayerStatuses = 0x01946950;
                         pointerForVelocityInfo = 0x01965348;
+                        pointerForCar = 0x01946260;
                         return true;
                     }
             }
@@ -126,6 +138,7 @@ namespace SRTPluginProviderDR1
             PointerBossInfo.UpdatePointers();
             PointerPlayerStatusesInfo.UpdatePointers();
             PointerVelocityInfo.UpdatePointers();
+            PointerTunnelCarInfo.UpdatePointers();
         }
 
         internal unsafe IGameMemoryDR1 Refresh()
@@ -185,6 +198,13 @@ namespace SRTPluginProviderDR1
                 var bossInfo = BossInfo.AsStruct(gameBossInfoBytes);
                 gameMemoryValues._bossCurrentHealth = bossInfo.CurrentHealth;
                 gameMemoryValues._bossMaxHealth = bossInfo.MaxHealth;
+            }
+
+            if (SafeReadByteArray(PointerTunnelCarInfo.Address, sizeof(TunnelCarInfo), out byte[] gameTunnelCarInfoBytes))
+            {
+                var carInfo = TunnelCarInfo.AsStruct(gameTunnelCarInfoBytes);
+                gameMemoryValues._tunnelCarCurrentHealth = carInfo.CurrentHealth;
+                gameMemoryValues._tunnelCarMaxHealth = carInfo.MaxHealth;
             }
 
             HasScanned = true;

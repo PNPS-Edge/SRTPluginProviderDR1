@@ -65,9 +65,12 @@ namespace SRTPluginProviderDR1
         internal int _bossCurrentHealth;
 
         public int BossMaxHealth { get => _bossMaxHealth; set => _bossMaxHealth = value; }
-
         internal int _bossMaxHealth;
 
+        public int TunnelCarCurrentHealth { get => _tunnelCarCurrentHealth; set => _tunnelCarCurrentHealth = value; }
+        internal int _tunnelCarCurrentHealth;
 
+        public int TunnelCarMaxHealth { get => _tunnelCarMaxHealth; set => _tunnelCarMaxHealth = value; }
+        internal int _tunnelCarMaxHealth;
     }
 }

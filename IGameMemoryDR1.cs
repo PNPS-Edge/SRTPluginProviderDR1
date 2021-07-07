@@ -43,5 +43,9 @@ namespace SRTPluginProviderDR1
         int BossCurrentHealth { get; set; }
 
         int BossMaxHealth { get; set; }
+
+        int TunnelCarCurrentHealth { get; set; }
+
+        int TunnelCarMaxHealth { get; set; }
     }
 }
