@@ -1,49 +1,80 @@
-﻿using System;
-using System.Globalization;
-using System.Runtime.InteropServices;
+﻿using SRTPluginProviderDR1.Structs;
 using System.Diagnostics;
+using System.Numerics;
 using System.Reflection;
-using SRTPluginProviderDR1.Structs;
 
 namespace SRTPluginProviderDR1
 {
+    /// <summary>
+    /// Class for Game Memory for Dead Rising (2016)
+    /// </summary>
     public class GameMemoryDR1 : IGameMemoryDR1
     {
+        /// <summary>
+        /// Gets the version
+        /// </summary>
         public string VersionInfo => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
+        /// <summary>
+        /// Gets or sets the game information
+        /// </summary>
         public Game Game { get; set; }
 
-        public Campain Campain { get; set; }
+        /// <summary>
+        /// Gets or sets the campaign information
+        /// </summary>
+        public Campaign Campaign { get; set; }
 
+        /// <summary>
+        /// Gets or sets the player information
+        /// </summary>
         public Player Player { get; set; }
 
-        public float CameraXPosition { get => _cameraXPosition; set => _cameraXPosition = value; }
-        internal float _cameraXPosition;
+        /// <summary>
+        /// Gets or sets the camera position information
+        /// </summary>
+        public Vector3 CameraPosition { get => _cameraPosition; set => _cameraPosition = value; }
+        internal Vector3 _cameraPosition;
 
-        public float CameraYPosition { get => _cameraYPosition; set => _cameraYPosition = value; }
-        internal float _cameraYPosition;
-
-        public float CameraZPosition { get => _cameraZPosition; set => _cameraZPosition = value; }
-        internal float _cameraZPosition;
-
+        /// <summary>
+        /// Gets or sets the weapon durability information
+        /// </summary>
         public float WeaponDurability { get => _weaponDurability; set => _weaponDurability = value; }
         internal float _weaponDurability;
 
+        /// <summary>
+        /// Gets or sets the weapon max durability information
+        /// </summary>
         public float WeaponMaxDurability { get => _weaponMaxDurability; set => _weaponMaxDurability = value; }
         internal float _weaponMaxDurability;
 
+        /// <summary>
+        /// Gets or sets the weapon max ammo information
+        /// </summary>
         public short WeaponMaxAmmo { get => _weaponMaxAmmo; set => _weaponMaxAmmo = value; }
         internal short _weaponMaxAmmo;
 
+        /// <summary>
+        /// Gets or sets the boss current health information
+        /// </summary>
         public int BossCurrentHealth { get => _bossCurrentHealth; set => _bossCurrentHealth = value; }
         internal int _bossCurrentHealth;
 
+        /// <summary>
+        /// Gets or sets the boss max health information
+        /// </summary>
         public int BossMaxHealth { get => _bossMaxHealth; set => _bossMaxHealth = value; }
         internal int _bossMaxHealth;
 
+        /// <summary>
+        /// Gets or sets the tunnel car current health information
+        /// </summary>
         public int TunnelCarCurrentHealth { get => _tunnelCarCurrentHealth; set => _tunnelCarCurrentHealth = value; }
         internal int _tunnelCarCurrentHealth;
 
+        /// <summary>
+        /// Gets or sets the tunnel car max health information
+        /// </summary>
         public int TunnelCarMaxHealth { get => _tunnelCarMaxHealth; set => _tunnelCarMaxHealth = value; }
         internal int _tunnelCarMaxHealth;
 
@@ -54,7 +85,8 @@ namespace SRTPluginProviderDR1
         {
             this.Game = new Game();
             this.Player = new Player();
-            this.Campain = new Campain();
+            this.Campaign = new Campaign();
+            this.CameraPosition = new Vector3();
         }
     }
 }

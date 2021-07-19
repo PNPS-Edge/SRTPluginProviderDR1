@@ -171,7 +171,7 @@ namespace SRTPluginProviderDR1
             {
                 var gameStatus = GameStatusInfo.AsStruct(gameStatusInfoBytes);
                 gameMemoryValues.Game._isGamePaused = gameStatus.IsGamePaused;
-                gameMemoryValues.Campain._gameTime = gameStatus.GameTime;
+                gameMemoryValues.Campaign._gameTime = gameStatus.GameTime;
                 gameMemoryValues.Game._gamemenu = gameStatus.GameMenu;
             }
 
@@ -179,11 +179,11 @@ namespace SRTPluginProviderDR1
             if (SafeReadByteArray(PointerPlayerInfo.Address, sizeof(PlayerInfo), out byte[] gamePlayerInfoBytes))
             {
                 var playerInfo = PlayerInfo.AsStruct(gamePlayerInfoBytes);
-                gameMemoryValues.Player._xPosition = playerInfo.XPosition;
-                gameMemoryValues.Player._yPosition = playerInfo.YPosition;
-                gameMemoryValues.Player._zPosition = playerInfo.ZPosition;
-                gameMemoryValues.Player._rotation1 = playerInfo.Rotation1;
-                gameMemoryValues.Player._rotation2 = playerInfo.Rotation2;
+                gameMemoryValues.Player._position.X = playerInfo.XPosition;
+                gameMemoryValues.Player._position.Y = playerInfo.YPosition;
+                gameMemoryValues.Player._position.Z = playerInfo.ZPosition;
+                gameMemoryValues.Player._rotation.X = playerInfo.Rotation1;
+                gameMemoryValues.Player._rotation.Y = playerInfo.Rotation2;
                 gameMemoryValues.Player._currentHealth = playerInfo.Health;
             }
 
@@ -229,17 +229,15 @@ namespace SRTPluginProviderDR1
             if (SafeReadByteArray(PointerCampainInfo.Address, sizeof(CampainInfo), out byte[] gameCampainInfoBytes))
             {
                 var campaignInfo = CampainInfo.AsStruct(gameCampainInfoBytes);
-                gameMemoryValues.Campain.CampaignProgress = campaignInfo.CampainProgress;
-                gameMemoryValues.Campain.CutsceneId = campaignInfo.CutsceneId;
+                gameMemoryValues.Campaign.CampaignProgress = campaignInfo.CampainProgress;
+                gameMemoryValues.Campaign.CutsceneId = campaignInfo.CutsceneId;
             }
 
             // Room Info
             if (SafeReadByteArray(PointerRoomInfo.Address, sizeof(RoomInfo), out byte[] gameRoomInfoBytes))
             {
                 var roomInfo = RoomInfo.AsStruct(gameRoomInfoBytes);
-                gameMemoryValues.Campain.RoomId = roomInfo.RoomId;
-                gameMemoryValues.Campain.LoadingRoom1Id = roomInfo.LoadingRoom1Id;
-                gameMemoryValues.Campain.LoadingRoom2Id = roomInfo.LoadingRoom2Id;
+                gameMemoryValues.Campaign.RoomId = roomInfo.RoomId;
                 gameMemoryValues.Game.IsLoading = roomInfo.IsLoading;
             }
 
@@ -247,9 +245,9 @@ namespace SRTPluginProviderDR1
             if (SafeReadByteArray(PointerCameraInfo.Address, sizeof(CameraInfo), out byte[] gameCameraInfoBytes))
             {
                 var cameraInfo = CameraInfo.AsStruct(gameCameraInfoBytes);
-                gameMemoryValues.CameraXPosition = cameraInfo.XPosition;
-                gameMemoryValues.CameraYPosition = cameraInfo.YPosition;
-                gameMemoryValues.CameraZPosition = cameraInfo.ZPosition;
+                gameMemoryValues._cameraPosition.X = cameraInfo.XPosition;
+                gameMemoryValues._cameraPosition.Y = cameraInfo.YPosition;
+                gameMemoryValues._cameraPosition.Z = cameraInfo.ZPosition;
             }
 
             HasScanned = true;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Numerics;
 
 namespace SRTPluginProviderDR1.Structs
 {
@@ -12,6 +10,16 @@ namespace SRTPluginProviderDR1.Structs
         #region Fields
 
         /// <summary>
+        /// Field for the position of the player
+        /// </summary>
+        internal Vector3 _position;
+
+        /// <summary>
+        /// Field for the rotation of the player
+        /// </summary>
+        internal Vector2 _rotation;
+
+        /// <summary>
         /// Field for current health of the player
         /// </summary>
         internal short _currentHealth;
@@ -20,31 +28,6 @@ namespace SRTPluginProviderDR1.Structs
         /// Field for max health of the player
         /// </summary>
         internal short _maxHealth;
-
-        /// <summary>
-        /// Field for the X position of the player
-        /// </summary>
-        internal float _xPosition;
-
-        /// <summary>
-        /// Field for the Y position of the player
-        /// </summary>
-        internal float _yPosition;
-
-        /// <summary>
-        /// Field for the Z position of the player
-        /// </summary>
-        internal float _zPosition;
-
-        /// <summary>
-        /// Field for the first rotation of the player
-        /// </summary>
-        internal float _rotation1;
-
-        /// <summary>
-        /// Field for the second rotation of the player
-        /// </summary>
-        internal float _rotation2;
 
         /// <summary>
         /// Field for the walked distance of the player
@@ -86,6 +69,16 @@ namespace SRTPluginProviderDR1.Structs
         #region Properties
 
         /// <summary>
+        /// Gets or sets the position of the player
+        /// </summary>
+        public Vector3 Position { get => _position; set => _position = value; }
+
+        /// <summary>
+        /// Gets or sets the rotation of the player
+        /// </summary>
+        public Vector2 Rotation { get => _rotation; set => _rotation = value; }
+
+        /// <summary>
         /// Gets or sets the current health of the player
         /// </summary>
         public short CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
@@ -94,31 +87,6 @@ namespace SRTPluginProviderDR1.Structs
         /// Gets or sets the max health of the player
         /// </summary>
         public short MaxHealth { get => _maxHealth; set => _maxHealth = value; }
-
-        /// <summary>
-        /// Gets or sets the X position of the player
-        /// </summary>
-        public float XPosition { get => _xPosition; set => _xPosition = value; }
-
-        /// <summary>
-        /// Gets or sets the Y position of the player
-        /// </summary>
-        public float YPosition { get => _yPosition; set => _yPosition = value; }
-
-        /// <summary>
-        /// Gets or sets the Z position of the player
-        /// </summary>
-        public float ZPosition { get => _zPosition; set => _zPosition = value; }
-
-        /// <summary>
-        /// Gets or sets the first rotation of the player
-        /// </summary>
-        public float Rotation1 { get => _rotation1; set => _rotation1 = value; }
-
-        /// <summary>
-        /// Gets or sets the second rotation of the player
-        /// </summary>
-        public float Rotation2 { get => _rotation2; set => _rotation2 = value; }
 
         /// <summary>
         /// Gets or sets the walked distance of the player
@@ -156,5 +124,18 @@ namespace SRTPluginProviderDR1.Structs
         public int Level { get => _level; set => _level = value; }
 
         #endregion Properties
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Player"/> class
+        /// </summary>
+        public Player()
+        {
+            this.Position = new Vector3();
+            this.Rotation = new Vector2();
+        }
+
+        #endregion Constuctors
     }
 }

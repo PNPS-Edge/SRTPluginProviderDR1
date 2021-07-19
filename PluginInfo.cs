@@ -9,7 +9,7 @@ namespace SRTPluginProviderDR1
 
         public string Description => "A game memory provider plugin for Dead Rising (2016).";
 
-        public string Author => "PNPS-Edge";
+        public string Author => "PNPS_Edge";
 
         public Uri MoreInfoURL => new Uri("https://github.com/PNPS-Edge/SRTPluginProviderDR1");
 
