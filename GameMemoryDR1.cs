@@ -19,6 +19,11 @@ namespace SRTPluginProviderDR1
         /// Gets or sets the game information
         /// </summary>
         public Game Game { get; set; }
+        
+        /// <summary>
+        /// Gets game name for web server UI
+        /// </summary>
+        public string GameName => "Dead Rising 1";
 
         /// <summary>
         /// Gets or sets the campaign information
