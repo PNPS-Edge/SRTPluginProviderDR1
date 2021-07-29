@@ -98,6 +98,9 @@ namespace SRTPluginProviderDR1.Structs
         /// </summary>
         public float Percentage => IsAlive ? (float)CurrentHealth / (float)MaxHealth : 0f;
 
+        /// <summary>
+        /// Player Health State Enumerator
+        /// </summary>
         public enum PlayerStatus
         {
             Dead,
@@ -107,6 +110,9 @@ namespace SRTPluginProviderDR1.Structs
             Danger,
         }
         
+        /// <summary>
+        /// Gets player health state enumerator value
+        /// </summary>
         public PlayerStatus HealthState
         {
             get =>
@@ -116,6 +122,9 @@ namespace SRTPluginProviderDR1.Structs
                 Percentage >= 0.25 ? PlayerStatus.Caution : PlayerStatus.Danger;
         }
 
+        /// <summary>
+        /// Gets player health state enumerator as string
+        /// </summary>
         public string CurrentHealthState => HealthState.ToString();
 
         /// <summary>
