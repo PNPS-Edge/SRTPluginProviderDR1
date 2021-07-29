@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 
 namespace SRTPluginProviderDR1.Structs.GameStructs
 {
-    [StructLayout(LayoutKind.Explicit, Pack = 1)]
-    public unsafe struct TunnelCarInfo
+    [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x8)]
+    public struct TunnelCarInfo
     {
-        [FieldOffset(0x12EC)] public int CurrentHealth;
-        [FieldOffset(0x12E8)] public int MaxHealth;
+        [FieldOffset(0x0)] private int maxHealth;
+        [FieldOffset(0x4)] private int currentHealth;
 
-        public static TunnelCarInfo AsStruct(byte[] data)
-        {
-            fixed (byte* pb = &data[0])
-            {
-                return *(TunnelCarInfo*)pb;
-            }
-        }
+        public int MaxHealth => maxHealth;
+        public int CurrentHealth => currentHealth;
     }
 }

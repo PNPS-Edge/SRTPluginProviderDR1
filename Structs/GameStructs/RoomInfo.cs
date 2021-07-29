@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 
 namespace SRTPluginProviderDR1.Structs.GameStructs
 {
 
-    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x71)]
     
-    public unsafe struct RoomInfo
+    public struct RoomInfo
     {
-        [FieldOffset(0x40)] public int RoomId;
-        [FieldOffset(0x44)] public int LoadingRoom1Id;
-        [FieldOffset(0x48)] public int LoadingRoom2Id;
-        [FieldOffset(0x70)] public bool IsLoading;
+        [FieldOffset(0x40)] private int roomId;
+        [FieldOffset(0x44)] private int loadingRoom1Id;
+        [FieldOffset(0x48)] private int loadingRoom2Id;
+        [FieldOffset(0x70)] private bool isLoading;
 
-        public static RoomInfo AsStruct(byte[] data)
-        {
-            fixed (byte* pb = &data[0])
-            {
-                return *(RoomInfo*)pb;
-            }
-        }
+        public int RoomId => roomId;
+        public int LoadingRoom1Id => loadingRoom1Id;
+        public int LoadingRoom2Id => loadingRoom2Id;
+        public bool IsLoading => isLoading;
     }
 }

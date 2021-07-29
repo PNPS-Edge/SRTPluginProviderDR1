@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SRTPluginProviderDR1.Structs.GameStructs
 {
-    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x14)]
 
     public unsafe struct CameraInfo
     {
-        [FieldOffset(0x8)] public float XPosition;
-        [FieldOffset(0xC)] public float YPosition;
-        [FieldOffset(0x10)] public float ZPosition;
+        [FieldOffset(0x8)] private Vector3 Position;
 
-        public static CameraInfo AsStruct(byte[] data)
-        {
-            fixed (byte* pb = &data[0])
-            {
-                return *(CameraInfo*)pb;
-            }
-        }
+        public float X => Position.X;
+        public float Y => Position.X;
+        public float Z => Position.X;
     }
 }

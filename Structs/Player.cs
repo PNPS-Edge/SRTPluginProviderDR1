@@ -22,12 +22,12 @@ namespace SRTPluginProviderDR1.Structs
         /// <summary>
         /// Field for current health of the player
         /// </summary>
-        internal short _currentHealth;
+        internal int _currentHealth;
 
         /// <summary>
         /// Field for max health of the player
         /// </summary>
-        internal short _maxHealth;
+        internal int _maxHealth;
 
         /// <summary>
         /// Field for the walked distance of the player
@@ -81,12 +81,12 @@ namespace SRTPluginProviderDR1.Structs
         /// <summary>
         /// Gets or sets the current health of the player
         /// </summary>
-        public short CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
+        public int CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
 
         /// <summary>
         /// Gets or sets the max health of the player
         /// </summary>
-        public short MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+        public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
         
         /// <summary>
         /// Gets or sets the percent of health for the player
