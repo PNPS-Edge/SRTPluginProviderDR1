@@ -14,7 +14,8 @@ namespace SRTPluginProviderDR1.Structs.GameStructs
         [FieldOffset(0xE)] private short maxAmmo;
 
         public float Durability => durability;
-        public float MaxDurability => durability;
+        public float MaxDurability => maxDurability;
+        public float Percentage => MaxDurability != 0 ? Durability / MaxDurability : 0f;
         public short Ammo => ammo;
         public short MaxAmmo => maxAmmo;
     }
