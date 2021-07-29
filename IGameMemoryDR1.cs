@@ -12,6 +12,11 @@ namespace SRTPluginProviderDR1
         /// Gets the version
         /// </summary>
         string VersionInfo { get; }
+        
+        /// <summary>
+        /// Gets game name for web server UI
+        /// </summary>
+        string GameName { get; }
 
         /// <summary>
         /// Gets or sets the game information
