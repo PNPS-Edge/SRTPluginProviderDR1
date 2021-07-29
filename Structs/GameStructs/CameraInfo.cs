@@ -13,7 +13,7 @@ namespace SRTPluginProviderDR1.Structs.GameStructs
         [FieldOffset(0x8)] private Vector3 Position;
 
         public float X => Position.X;
-        public float Y => Position.X;
-        public float Z => Position.X;
+        public float Y => Position.Y;
+        public float Z => Position.Z;
     }
 }
