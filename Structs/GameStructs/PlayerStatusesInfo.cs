@@ -2,24 +2,24 @@
 
 namespace SRTPluginProviderDR1.Structs.GameStructs
 {
-    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x77)]
 
-    public unsafe struct PlayerStatusesInfo
+    public struct PlayerStatusesInfo
     {
-        [FieldOffset(0x50)] public int PPCounter;
-        [FieldOffset(0x68)] public short Level;
-        [FieldOffset(0x72)] public short Attack;
-        [FieldOffset(0x78)] public byte Speed;
-        [FieldOffset(0x70)] public short MaxHealth;
-        [FieldOffset(0x77)] public byte ItemStock;
-        [FieldOffset(0x76)] public byte ThrowDistance;
+        [FieldOffset(0x50)] private int ppCounter;
+        [FieldOffset(0x68)] private short level;
+        [FieldOffset(0x72)] private short attack;
+        [FieldOffset(0x78)] private byte speed;
+        [FieldOffset(0x70)] private short maxHealth;
+        [FieldOffset(0x77)] private byte itemStock;
+        [FieldOffset(0x76)] private byte throwDistance;
 
-        public static PlayerStatusesInfo AsStruct(byte[] data)
-        {
-            fixed (byte* pb = &data[0])
-            {
-                return *(PlayerStatusesInfo*)pb;
-            }
-        }
+        public int PPCounter => ppCounter;
+        public short Level => level;
+        public short Attack => attack;
+        public byte Speed => speed;
+        public short MaxHealth => maxHealth;
+        public byte ItemStock => itemStock;
+        public byte ThrowDistance => throwDistance;
     }
 }

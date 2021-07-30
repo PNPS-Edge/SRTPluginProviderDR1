@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SRTPluginProviderDR1", "SRTPluginProviderDR1.csproj", "{93F0EEB4-5237-4241-BF16-CF9C20C77222}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessMemory", "..\..\Squirrelies\ProcessMemory\ProcessMemory\ProcessMemory.csproj", "{BD516483-02B5-43AD-A01B-0A5690229049}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SRTPluginBase", "..\..\Squirrelies\SRTHost\SRTPluginBase\SRTPluginBase.csproj", "{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93F0EEB4-5237-4241-BF16-CF9C20C77222}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{93F0EEB4-5237-4241-BF16-CF9C20C77222}.Debug|x64.ActiveCfg = Debug|x64
+		{93F0EEB4-5237-4241-BF16-CF9C20C77222}.Debug|x64.Build.0 = Debug|x64
+		{93F0EEB4-5237-4241-BF16-CF9C20C77222}.Debug|x86.ActiveCfg = Debug|x64
+		{93F0EEB4-5237-4241-BF16-CF9C20C77222}.Release|Any CPU.ActiveCfg = Release|x64
+		{93F0EEB4-5237-4241-BF16-CF9C20C77222}.Release|x64.ActiveCfg = Release|x64
+		{93F0EEB4-5237-4241-BF16-CF9C20C77222}.Release|x64.Build.0 = Release|x64
+		{93F0EEB4-5237-4241-BF16-CF9C20C77222}.Release|x86.ActiveCfg = Release|x64
+		{BD516483-02B5-43AD-A01B-0A5690229049}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BD516483-02B5-43AD-A01B-0A5690229049}.Debug|x64.ActiveCfg = Debug|x64
+		{BD516483-02B5-43AD-A01B-0A5690229049}.Debug|x64.Build.0 = Debug|x64
+		{BD516483-02B5-43AD-A01B-0A5690229049}.Debug|x86.ActiveCfg = Debug|x86
+		{BD516483-02B5-43AD-A01B-0A5690229049}.Debug|x86.Build.0 = Debug|x86
+		{BD516483-02B5-43AD-A01B-0A5690229049}.Release|Any CPU.ActiveCfg = Release|x86
+		{BD516483-02B5-43AD-A01B-0A5690229049}.Release|x64.ActiveCfg = Release|x64
+		{BD516483-02B5-43AD-A01B-0A5690229049}.Release|x64.Build.0 = Release|x64
+		{BD516483-02B5-43AD-A01B-0A5690229049}.Release|x86.ActiveCfg = Release|x86
+		{BD516483-02B5-43AD-A01B-0A5690229049}.Release|x86.Build.0 = Release|x86
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Debug|x64.Build.0 = Debug|Any CPU
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Debug|x86.Build.0 = Debug|Any CPU
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Release|x64.ActiveCfg = Release|Any CPU
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Release|x64.Build.0 = Release|Any CPU
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Release|x86.ActiveCfg = Release|Any CPU
+		{6E5AB686-D022-4596-9795-3D1DF2CE7DF9}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F11A013A-3C6B-4466-8BA8-A6FD7FAA491A}
+	EndGlobalSection
+EndGlobal

@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 
 namespace SRTPluginProviderDR1.Structs.GameStructs
 {
-    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x830C)]
 
-    public unsafe struct CampainInfo
+    public struct CampainInfo
     {
-        [FieldOffset(0x150)] public int CampainProgress;
-        [FieldOffset(0x8308)] public int CutsceneId;
+        [FieldOffset(0x150)] private int campainProgress;
+        [FieldOffset(0x8308)] private int cutsceneId;
 
-        public static CampainInfo AsStruct(byte[] data)
-        {
-            fixed (byte* pb = &data[0])
-            {
-                return *(CampainInfo*)pb;
-            }
-        }
+        public int CampainProgress => campainProgress;
+        public int CutsceneId => cutsceneId;
     }
 }

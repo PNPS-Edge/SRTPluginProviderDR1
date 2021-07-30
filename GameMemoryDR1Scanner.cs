@@ -167,88 +167,31 @@ namespace SRTPluginProviderDR1
             bool success;
 
             //Game Info
-            if (SafeReadByteArray(PointerGameStatusInfo.Address, sizeof(GameStatusInfo), out byte[] gameStatusInfoBytes))
-            {
-                var gameStatus = GameStatusInfo.AsStruct(gameStatusInfoBytes);
-                gameMemoryValues.Game._isGamePaused = gameStatus.IsGamePaused;
-                gameMemoryValues.Campaign._gameTime = gameStatus.GameTime;
-                gameMemoryValues.Game._gamemenu = gameStatus.GameMenu;
-            }
+            gameMemoryValues.Game = PointerGameStatusInfo.Deref<GameStatusInfo>(0x0);
 
-            //Coordinates Info
-            if (SafeReadByteArray(PointerPlayerInfo.Address, sizeof(PlayerInfo), out byte[] gamePlayerInfoBytes))
-            {
-                var playerInfo = PlayerInfo.AsStruct(gamePlayerInfoBytes);
-                gameMemoryValues.Player._position.X = playerInfo.XPosition;
-                gameMemoryValues.Player._position.Y = playerInfo.YPosition;
-                gameMemoryValues.Player._position.Z = playerInfo.ZPosition;
-                gameMemoryValues.Player._rotation.X = playerInfo.Rotation1;
-                gameMemoryValues.Player._rotation.Y = playerInfo.Rotation2;
-                gameMemoryValues.Player._currentHealth = playerInfo.Health;
-            }
+            // Player Info
+            gameMemoryValues._player = PointerPlayerInfo.Deref<PlayerInfo>(0x0);
 
-            //Player Statuses Info
-            if (SafeReadByteArray(PointerPlayerStatusesInfo.Address, sizeof(PlayerStatusesInfo), out byte[] gamePlayerStatusesInfoBytes))
-            {
-                var playerStatusesInfo = PlayerStatusesInfo.AsStruct(gamePlayerStatusesInfoBytes);
-                gameMemoryValues.Player._statusAttack = playerStatusesInfo.Attack;
-                gameMemoryValues.Player._statusSpeed = playerStatusesInfo.Speed;
-                gameMemoryValues.Player._maxHealth = playerStatusesInfo.MaxHealth;
-                gameMemoryValues.Player._statusItemStock = playerStatusesInfo.ItemStock;
-                gameMemoryValues.Player._statusThrowDistance = playerStatusesInfo.ThrowDistance;
-                gameMemoryValues.Player._level = playerStatusesInfo.Level;
-                gameMemoryValues.Player._ppCounter = playerStatusesInfo.PPCounter;
-            }
+            // Player Stats
+            gameMemoryValues._playerStats = PointerPlayerStatusesInfo.Deref<PlayerStatusesInfo>(0x0);
 
             // Current Weapon Info
-            if (SafeReadByteArray(PointerCurrentWeapon.Address, sizeof(WeaponInfo), out byte[] gameWeaponInfoBytes))
-            {
-                var weapon = WeaponInfo.AsStruct(gameWeaponInfoBytes);
-                gameMemoryValues._weaponDurability = weapon.Durability;
-                gameMemoryValues._weaponMaxDurability = weapon.MaxDurability;
-                gameMemoryValues._weaponMaxAmmo = weapon.MaxAmmo;
-            }
+            gameMemoryValues._currentWeapon = PointerCurrentWeapon.Deref<WeaponInfo>(0x2E20);
 
-            //Boss Info
-            if (SafeReadByteArray(PointerBossInfo.Address, sizeof(BossInfo), out byte[] gameBossInfoBytes))
-            {
-                var bossInfo = BossInfo.AsStruct(gameBossInfoBytes);
-                gameMemoryValues._bossCurrentHealth = bossInfo.CurrentHealth;
-                gameMemoryValues._bossMaxHealth = bossInfo.MaxHealth;
-            }
+            // Boss Info
+            gameMemoryValues._boss = PointerBossInfo.Deref<BossInfo>(0x12E8);
 
             // Tunnel Car Info
-            if (SafeReadByteArray(PointerTunnelCarInfo.Address, sizeof(TunnelCarInfo), out byte[] gameTunnelCarInfoBytes))
-            {
-                var carInfo = TunnelCarInfo.AsStruct(gameTunnelCarInfoBytes);
-                gameMemoryValues._tunnelCarCurrentHealth = carInfo.CurrentHealth;
-                gameMemoryValues._tunnelCarMaxHealth = carInfo.MaxHealth;
-            }
+            PointerTunnelCarInfo.Deref<TunnelCarInfo>(0x12E8);
 
             // Campaign Info
-            if (SafeReadByteArray(PointerCampainInfo.Address, sizeof(CampainInfo), out byte[] gameCampainInfoBytes))
-            {
-                var campaignInfo = CampainInfo.AsStruct(gameCampainInfoBytes);
-                gameMemoryValues.Campaign.CampaignProgress = campaignInfo.CampainProgress;
-                gameMemoryValues.Campaign.CutsceneId = campaignInfo.CutsceneId;
-            }
+            gameMemoryValues.Campaign = PointerCampainInfo.Deref<CampainInfo>(0x0);
 
             // Room Info
-            if (SafeReadByteArray(PointerRoomInfo.Address, sizeof(RoomInfo), out byte[] gameRoomInfoBytes))
-            {
-                var roomInfo = RoomInfo.AsStruct(gameRoomInfoBytes);
-                gameMemoryValues.Campaign.RoomId = roomInfo.RoomId;
-                gameMemoryValues.Game.IsLoading = roomInfo.IsLoading;
-            }
+            gameMemoryValues._roomData = PointerRoomInfo.Deref<RoomInfo>(0x0);
 
             // Camera Info
-            if (SafeReadByteArray(PointerCameraInfo.Address, sizeof(CameraInfo), out byte[] gameCameraInfoBytes))
-            {
-                var cameraInfo = CameraInfo.AsStruct(gameCameraInfoBytes);
-                gameMemoryValues._cameraPosition.X = cameraInfo.XPosition;
-                gameMemoryValues._cameraPosition.Y = cameraInfo.YPosition;
-                gameMemoryValues._cameraPosition.Z = cameraInfo.ZPosition;
-            }
+            gameMemoryValues._cameraPosition = PointerCameraInfo.Deref<CameraInfo>(0x0);
 
             HasScanned = true;
             return gameMemoryValues;

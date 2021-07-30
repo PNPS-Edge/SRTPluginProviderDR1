@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 
 namespace SRTPluginProviderDR1.Structs.GameStructs
 {
-    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x19C)]
 
-    public unsafe struct GameStatusInfo
+    public struct GameStatusInfo
     {
-        [FieldOffset(0x38)] public int GameMenu;
-        [FieldOffset(0x182)] public bool IsGamePaused;
-        [FieldOffset(0x198)] public uint GameTime;
+        [FieldOffset(0x38)] private int gameMenu;
+        [FieldOffset(0x182)] private bool isGamePaused;
+        [FieldOffset(0x198)] private uint gameTime;
 
-        public static GameStatusInfo AsStruct(byte[] data)
-        {
-            fixed (byte* pb = &data[0])
-            {
-                return *(GameStatusInfo*)pb;
-            }
-        }
+        public int GameMenu => gameMenu;
+        public bool IsGamePaused => isGamePaused;
+        public uint GameTime => gameTime;
     }
 }
