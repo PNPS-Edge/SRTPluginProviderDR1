@@ -5,7 +5,7 @@ namespace SRTPluginProviderDR1.Structs.GameStructs
     /// <summary>
     /// Structure for weapon information
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x10)]
     public unsafe struct WeaponInfo
     {
         [FieldOffset(0x2E24)] public float Durability;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SRTPluginProviderDR1.Structs.GameStructs
 {
-    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x830C)]
 
     public unsafe struct CampainInfo
     {
