@@ -1,4 +1,5 @@
 ﻿using SRTPluginProviderDR1.Structs;
+using SRTPluginProviderDR1.Structs.GameStructs;
 using System.Numerics;
 
 namespace SRTPluginProviderDR1
@@ -16,56 +17,46 @@ namespace SRTPluginProviderDR1
         /// <summary>
         /// Gets or sets the game information
         /// </summary>
-        Game Game { get; set; }
+        GameStatusInfo Game { get; set; }
 
         /// <summary>
         /// Gets or sets the campaign information
         /// </summary>
-        Campaign Campaign { get; set; }
+        CampaignInfo Campaign { get; set; }
 
         /// <summary>
         /// Gets or sets the player information
         /// </summary>
-        Player Player { get; set; }
+        PlayerInfo Player { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player statuses information
+        /// </summary>
+        PlayerStatusesInfo PlayerStatuses { get; set; }
 
         /// <summary>
         /// Gets or sets the camera position information
         /// </summary>
-        Vector3 CameraPosition { get; set; }
+        CameraInfo CameraPosition { get; set; }
 
         /// <summary>
-        /// Gets or sets the weapon durability information
+        /// Gets or sets the weapon information
         /// </summary>
-        float WeaponDurability { get; set; }
+        WeaponInfo WeaponInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the weapon max durability information
+        /// Gets or sets the boss information
         /// </summary>
-        float WeaponMaxDurability { get; set; }
+        BossInfo BossInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the weapon max ammo information
+        /// Gets or sets the room information
         /// </summary>
-        short WeaponMaxAmmo { get; set; }
+        RoomInfo RoomInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the boss current health information
+        /// Gets or sets the tunnel information
         /// </summary>
-        int BossCurrentHealth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the boss max health information
-        /// </summary>
-        int BossMaxHealth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tunnel car current health information
-        /// </summary>
-        int TunnelCarCurrentHealth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tunnel car max health information
-        /// </summary>
-        int TunnelCarMaxHealth { get; set; }
+        TunnelCarInfo TunnelCarInfo { get; set; }
     }
 }

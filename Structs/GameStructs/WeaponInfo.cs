@@ -6,22 +6,53 @@ namespace SRTPluginProviderDR1.Structs.GameStructs
     /// Structure for weapon information
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x10)]
-    public unsafe struct WeaponInfo
+    public struct WeaponInfo
     {
-        [FieldOffset(0x2E24)] public float Durability;
+        #region Fields
 
-        [FieldOffset(0x2E28)] public float MaxDurability;
+        /// <summary>
+        /// Field for the durability
+        /// </summary>
+        [FieldOffset(0x0)] internal float _durability;
+        
+        /// <summary>
+        /// Field for the max durability
+        /// </summary>
+        [FieldOffset(0x4)] internal float _maxDurability;
 
-        [FieldOffset(0x2E2C)] public short Ammo;
+        /// <summary>
+        /// Field for the ammo
+        /// </summary>
+        [FieldOffset(0x8)] internal short _ammo;
 
-        [FieldOffset(0x2E2E)] public short MaxAmmo;
+        /// <summary>
+        /// Field for the max ammo
+        /// </summary>
+        [FieldOffset(0xA)] internal short _maxAmmo;
 
-        public static WeaponInfo AsStruct(byte[] data)
-        {
-            fixed (byte* pb = &data[0])
-            {
-                return *(WeaponInfo*)pb;
-            }
-        }
+        #endregion Fields
+
+        #region Properties
+
+        /// <summary>
+        /// Gets the durability of the weapon
+        /// </summary>
+        public float Durability => this._durability;
+
+        /// <summary>
+        /// Gets the Max durability of the weapon
+        /// </summary>
+        public float MaxDurability => this._maxDurability;
+
+        /// <summary>
+        /// Gets the Ammo of the weapon
+        /// </summary>
+        public short Ammo => this._ammo;
+
+        /// <summary>
+        /// Gets the Max Ammo of the weapon
+        /// </summary>
+        public short MaxAmmo => this._maxAmmo;
+        #endregion Properties
     }
 }

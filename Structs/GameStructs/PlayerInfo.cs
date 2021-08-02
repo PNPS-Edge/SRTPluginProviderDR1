@@ -1,24 +1,48 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Numerics;
+using System.Runtime.InteropServices;
 
 namespace SRTPluginProviderDR1.Structs.GameStructs
 {
-    [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x12F0)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x12B0)]
 
-    public unsafe struct PlayerInfo
+    public struct PlayerInfo
     {
-        [FieldOffset(0x40)] public float XPosition;
-        [FieldOffset(0x44)] public float YPosition;
-        [FieldOffset(0x48)] public float ZPosition;
-        [FieldOffset(0x54)] public float Rotation1;
-        [FieldOffset(0x5C)] public float Rotation2;
-        [FieldOffset(0x12EC)] public short Health;
+        #region Fields
 
-        public static PlayerInfo AsStruct(byte[] data)
-        {
-            fixed (byte* pb = &data[0])
-            {
-                return *(PlayerInfo*)pb;
-            }
-        }
+        /// <summary>
+        /// Field for the player position
+        /// </summary>
+        [FieldOffset(0x0)] internal Vector3 _position;
+
+        /// <summary>
+        /// Field for the player rotation
+        /// </summary>
+        [FieldOffset(0x14)] internal Vector2 _rotation;
+
+        /// <summary>
+        /// Filed for the player current health
+        /// </summary>
+        [FieldOffset(0x12AC)] internal short _health;
+
+        #endregion Fields
+
+        #region Properties
+
+        /// <summary>
+        /// Gets the position of the player
+        /// </summary>
+        public Vector3 Position => _position;
+
+        /// <summary>
+        /// Gets the rotation of the player
+        /// </summary>
+        public Vector2 Rotation => _rotation;
+
+        /// <summary>
+        /// Gets the health of the player
+        /// </summary>
+        public short Health => _health;
+
+        #endregion Properties
     }
 }

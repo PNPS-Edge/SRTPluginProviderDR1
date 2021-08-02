@@ -1,23 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 
 namespace SRTPluginProviderDR1.Structs.GameStructs
 {
     [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x8)]
 
-    public unsafe struct BossInfo
+    public struct BossInfo
     {
-        [FieldOffset(0x12E8)] public int MaxHealth;
-        [FieldOffset(0x12EC)] public int CurrentHealth;
+        #region Fields
 
-        public static BossInfo AsStruct(byte[] data)
-        {
-            fixed (byte* pb = &data[0])
-            {
-                return *(BossInfo*)pb;
-            }
-        }
+        /// <summary>
+        /// Field for max health
+        /// </summary>
+        [FieldOffset(0x0)] internal int _maxHealth;
+
+        /// <summary>
+        /// Field for current health
+        /// </summary>
+        [FieldOffset(0x4)] internal int _currentHealth;
+
+        #endregion Fields
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the max health
+        /// </summary>
+        public int MaxHealth => _maxHealth;
+
+        /// <summary>
+        /// Gets or sets the current health
+        /// </summary>
+        public int CurrentHealth => _currentHealth;
+
+        #endregion Properties
     }
 }
