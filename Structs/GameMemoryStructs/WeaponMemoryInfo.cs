@@ -6,7 +6,7 @@ namespace SRTPluginProviderDR1.Structs.GameStructs
     /// Structure for weapon information
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x10)]
-    public struct WeaponInfo
+    public struct WeaponMemoryInfo
     {
         #region Fields
 

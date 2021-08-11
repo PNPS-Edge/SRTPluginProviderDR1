@@ -5,7 +5,7 @@ namespace SRTPluginProviderDR1.Structs.GameStructs
 {
     [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0xC)]
 
-    public struct CameraInfo
+    public struct CameraMemoryInfo
     {
         #region Fields
 

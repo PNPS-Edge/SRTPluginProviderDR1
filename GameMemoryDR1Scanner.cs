@@ -12,6 +12,7 @@ namespace SRTPluginProviderDR1
         // Variables
         private ProcessMemoryHandler memoryAccess;
         private GameMemoryDR1 gameMemoryValues;
+        private GameInfoDR1 gameInfoValues;
 
         public bool HasScanned;
         public bool ProcessRunning => memoryAccess != null && memoryAccess.ProcessRunning;
@@ -166,32 +167,19 @@ namespace SRTPluginProviderDR1
         {
             bool success;
 
-            // Game Info
-            gameMemoryValues._game = this.PointerGameStatusInfo.Deref<GameStatusInfo>(0x38);
+            #region Read Values
 
-            // player Info
-            gameMemoryValues._player = this.PointerPlayerInfo.Deref<PlayerInfo>(0x40);
+            gameMemoryValues._game = this.PointerGameStatusInfo.Deref<GameMemoryInfo>(0x38);
+            gameMemoryValues._player = this.PointerPlayerInfo.Deref<PlayerMemoryInfo>(0x40);
+            gameMemoryValues._playerStatuses = this.PointerPlayerStatusesInfo.Deref<PlayerStatusesMemoryInfo>(0x50);
+            gameMemoryValues._weaponInfo = this.PointerCurrentWeapon.Deref<WeaponMemoryInfo>(0x2E24);
+            gameMemoryValues._bossInfo = this.PointerBossInfo.Deref<BossMemoryInfo>(0x12E8);
+            gameMemoryValues._tunnelCarInfo = this.PointerTunnelCarInfo.Deref<TunnelCarMemoryInfo>(0x12EC);
+            gameMemoryValues._campaign = this.PointerCampainInfo.Deref<CampaignMemoryInfo>(0x150);
+            gameMemoryValues._roomInfo = this.PointerRoomInfo.Deref<RoomRemoryInfo>(0x40);
+            gameMemoryValues._cameraPosition = this.PointerCameraInfo.Deref<CameraMemoryInfo>(0x8);
 
-            // player Statuses Info
-            gameMemoryValues._playerStatuses = this.PointerPlayerStatusesInfo.Deref<PlayerStatusesInfo>(0x50);
-
-            // Current Weapon Info
-            gameMemoryValues._weaponInfo = this.PointerCurrentWeapon.Deref<WeaponInfo>(0x2E24);
-
-            // Boss Info
-            gameMemoryValues._bossInfo = this.PointerBossInfo.Deref<BossInfo>(0x12E8);
-
-            // Tunnel Car Info
-            gameMemoryValues._tunnelCarInfo = this.PointerTunnelCarInfo.Deref<TunnelCarInfo>(0x12EC);
-
-            // Campaign Info
-            gameMemoryValues._campaign = this.PointerCampainInfo.Deref<CampaignInfo>(0x150);
-
-            // Room Info
-            gameMemoryValues._roomInfo = this.PointerRoomInfo.Deref<RoomInfo>(0x40);
-
-            // Camera Info
-            gameMemoryValues._cameraPosition = this.PointerCameraInfo.Deref<CameraInfo>(0x8);
+            #endregion Read Values
 
             HasScanned = true;
             return gameMemoryValues;

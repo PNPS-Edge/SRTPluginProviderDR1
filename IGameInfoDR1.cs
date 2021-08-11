@@ -7,7 +7,7 @@ namespace SRTPluginProviderDR1
     /// <summary>
     /// Interface for Game Memory for Dead Rising (2016)
     /// </summary>
-    public interface IGameMemoryDR1
+    public interface IGameInfoDR1
     {
         /// <summary>
         /// Gets the version

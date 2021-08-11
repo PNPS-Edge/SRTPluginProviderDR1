@@ -4,7 +4,7 @@ namespace SRTPluginProviderDR1.Structs.GameStructs
 {
     [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x31)]
     
-    public struct RoomInfo
+    public struct RoomRemoryInfo
     {
         #region Fields
 

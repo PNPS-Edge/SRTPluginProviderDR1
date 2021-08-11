@@ -9,14 +9,14 @@ namespace SRTPluginProviderDR1
     /// <summary>
     /// Class for Game Memory for Dead Rising (2016)
     /// </summary>
-    public class GameMemoryDR1 : IGameMemoryDR1
+    public class GameInfoDR1 : IGameInfoDR1
     {
         #region Fields
 
         /// <summary>
         /// Field for Game memory info
         /// </summary>
-        internal GameMemoryInfo _game;
+        internal Developper _game;
 
         /// <summary>
         /// Field for campaign info

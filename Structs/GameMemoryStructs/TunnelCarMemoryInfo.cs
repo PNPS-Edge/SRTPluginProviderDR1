@@ -3,35 +3,33 @@
 namespace SRTPluginProviderDR1.Structs.GameStructs
 {
     [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x8)]
-
-    public struct BossInfo
+    public struct TunnelCarMemoryInfo
     {
         #region Fields
 
         /// <summary>
-        /// Field for max health
+        /// Field for current car health
         /// </summary>
-        [FieldOffset(0x0)] internal int _maxHealth;
+        [FieldOffset(0x0)] internal int _currentHealth;
 
         /// <summary>
-        /// Field for current health
+        /// Field for the max health
         /// </summary>
-        [FieldOffset(0x4)] internal int _currentHealth;
+        [FieldOffset(0x4)] internal int _maxHealth;
 
         #endregion Fields
 
         #region Properties
 
         /// <summary>
-        /// Gets or sets the max health
-        /// </summary>
-        public int MaxHealth => _maxHealth;
-
-        /// <summary>
-        /// Gets or sets the current health
+        /// Gets the current health
         /// </summary>
         public int CurrentHealth => _currentHealth;
 
+        /// <summary>
+        /// Gets the max health
+        /// </summary>
+        public int MaxHealth => _maxHealth;
         #endregion Properties
     }
 }
