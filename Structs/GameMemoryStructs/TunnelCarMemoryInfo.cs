@@ -30,6 +30,7 @@ namespace SRTPluginProviderDR1.Structs.GameStructs
         /// Gets the max health
         /// </summary>
         public int MaxHealth => _maxHealth;
+
         #endregion Properties
     }
 }

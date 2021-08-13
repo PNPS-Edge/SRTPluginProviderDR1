@@ -1,4 +1,5 @@
 ﻿using SRTPluginProviderDR1.Structs;
+using SRTPluginProviderDR1.Structs.GameModel;
 using SRTPluginProviderDR1.Structs.GameStructs;
 using System.Numerics;
 
@@ -15,48 +16,18 @@ namespace SRTPluginProviderDR1
         string VersionInfo { get; }
 
         /// <summary>
-        /// Gets or sets the game information
+        /// Gets or sets the developper view
         /// </summary>
-        GameMemoryInfo Game { get; set; }
+        DevelopperModelInfo DevelopperInfo { get; }
 
         /// <summary>
-        /// Gets or sets the campaign information
+        /// Gets or sets the speedrunner view
         /// </summary>
-        CampaignMemoryInfo Campaign { get; set; }
+        SpeedrunnerModelInfo SpeedrunnerInfo { get; }
 
         /// <summary>
-        /// Gets or sets the player information
+        /// Gets or sets the PP Stickers Trainer view
         /// </summary>
-        PlayerMemoryInfo Player { get; set; }
-
-        /// <summary>
-        /// Gets or sets the player statuses information
-        /// </summary>
-        PlayerStatusesMemoryInfo PlayerStatuses { get; set; }
-
-        /// <summary>
-        /// Gets or sets the camera position information
-        /// </summary>
-        CameraMemoryInfo CameraPosition { get; set; }
-
-        /// <summary>
-        /// Gets or sets the weapon information
-        /// </summary>
-        WeaponMemoryInfo WeaponInfo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the boss information
-        /// </summary>
-        BossMemoryInfo BossInfo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the room information
-        /// </summary>
-        RoomRemoryInfo RoomInfo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tunnel information
-        /// </summary>
-        TunnelCarMemoryInfo TunnelCarInfo { get; set; }
+        PPStickerModelInfo PPStickerInfo { get; }
     }
 }

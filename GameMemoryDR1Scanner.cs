@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Collections.Generic;
 using SRTPluginProviderDR1.Structs.GameStructs;
+using System.Numerics;
 
 namespace SRTPluginProviderDR1
 {
@@ -13,6 +14,7 @@ namespace SRTPluginProviderDR1
         private ProcessMemoryHandler memoryAccess;
         private GameMemoryDR1 gameMemoryValues;
         private GameInfoDR1 gameInfoValues;
+        private PreviousValues previousValues;
 
         public bool HasScanned;
         public bool ProcessRunning => memoryAccess != null && memoryAccess.ProcessRunning;
@@ -180,6 +182,9 @@ namespace SRTPluginProviderDR1
             gameMemoryValues._cameraPosition = this.PointerCameraInfo.Deref<CameraMemoryInfo>(0x8);
 
             #endregion Read Values
+
+            gameInfoValues.Load(gameMemoryValues, this.previousValues);
+
 
             HasScanned = true;
             return gameMemoryValues;
